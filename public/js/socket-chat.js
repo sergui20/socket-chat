@@ -1,54 +1,52 @@
 var socket = io();
 
-var params = new URLSearchParams(window.location.search);
-
-if(!params.has('nombre') || !params.has('sala')){
+if (!params.has('nombre') || !params.has('sala')) {
     window.location = 'index.html';
-    throw new Error('El nombre y la sala son necesarios');
+    throw new Error('El nombre y sala son necesarios');
 }
 
 var usuario = {
     nombre: params.get('nombre'),
     sala: params.get('sala')
-}
+};
+
+
 
 socket.on('connect', function() {
     console.log('Conectado al servidor');
 
-    socket.emit('chatLogin', usuario, function(resp){
-        console.log('Usuarios conectados', resp);
-    })
+    socket.emit('chatLogin', usuario, function(resp) {
+        // console.log('Usuarios conectados', resp);
+        renderUsers(resp)
+    });
+
 });
 
 // escuchar
 socket.on('disconnect', function() {
+
     console.log('Perdimos conexión con el servidor');
+
 });
 
-// Enviar información
-// socket.emit('sendMessage', {
-//     usuario: 'Fernando',
-//     mensaje: 'Hola Mundo'
-// }, function(resp) {
-//     console.log('respuesta server: ', resp);
-// });
+// Escuchar información
+socket.on('sendMessage', function(mensaje) {
+    // console.log('Servidor:', mensaje);
 
-// Esuchar broadcast de los usuarios
-socket.on('sendMessage', function(message){
-    console.log('Servidor: ', message)
-})
-
-// Escuchar logout
-socket.on('logoutEvent', function(data) {
-    console.log('Servidor:', data);
+    renderMessage(mensaje, false)
 });
 
-//Esuchar cuando un usario entra o sale del chat 
-socket.on('loginEvent', function(data){
-    console.log(data)
+// Escuchar cambios de usuarios
+// cuando un usuario entra o sale del chat
+socket.on('loginEvent', function(personas) {
+    renderUsers(personas, false)
+});
+
+socket.on('logoutEvent', function(mensaje){
+    renderMessage(mensaje)
 })
 
 // Mensajes privados
-socket.on('P2Pmessage', function(message){
-    console.log('Mensaje privado', message)
-})
+socket.on('P2Pmessage', function(mensaje) {
+    console.log('Mensaje Privado:', mensaje);
+});

@@ -20,16 +20,19 @@ io.on('connection', (client) => {
         let roomUsers = users.getUsersByGroup(user.sala)
 
         client.broadcast.to(user.sala).emit('loginEvent', users.getUsersByGroup(user.sala) )
+        client.broadcast.to(user.sala).emit('sendMessage', createMessage('Admin', `${user.nombre} se ha unido`));
 
         callback(roomUsers);
     })
 
-    client.on('sendMessage', function(data){
+    client.on('sendMessage', function(data, callback){
         let user = users.getUser(client.id);
 
         let message = createMessage(data.name, data.message);
         
         client.broadcast.to(user.room).emit('sendMessage', message);
+        
+        callback(message);
     })
 
     client.on('disconnect', function(){

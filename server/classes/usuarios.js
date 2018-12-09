@@ -16,9 +16,11 @@ class Users {
     }
 
     getUser(id) {
-        let user = this.users.filter( user=>{
-            return user.id === id
-        })[0];
+        let user = this.users.filter( el =>{
+            return el.id === id
+        })[0];  
+
+        console.log('Classes', user)
 
         return user;
     }
