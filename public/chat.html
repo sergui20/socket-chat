@@ -47,9 +47,11 @@
                             <!-- .chat-row -->
                             <div class="chat-main-box">
                                 <!-- .chat-left-panel -->
-                                <div class="chat-left-aside">
-                                    <div class="open-panel"><i class="ti-angle-right"></i></div>
-                                    <div class="chat-left-inner">
+                                <div class="chat-left-aside dropright">
+                                    <button type="button" class="open-panel dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        
+                                    </button>
+                                    <div class="chat-left-inner dropdown-menu">
                                         <div class="form-material">
                                             <input class="form-control p-20" type="text" placeholder="Buscar Contacto">
                                         </div>
@@ -62,32 +64,18 @@
                                 <!-- .chat-right-panel -->
                                 <div class="chat-right-aside">
                                     <div class="chat-main-header">
-                                        <div class="p-20 b-b">
-                                            <h3 class="box-title">Sala de chat <small>Video Juegos</small></h3>
+                                        <div class="p-20 b-b" id="roomName">
+                                            <!-- <h3 class="box-title">Sala de chat <small>Video Juegos</small></h3> -->
                                         </div>
                                     </div>
 
                                     <div class="chat-rbox">
                                         <ul class="chat-list p-20" id="divChatbox">
-                                            <!-- chat Row
-                                            <li>
-                                                <div class="chat-img"><img src="assets/images/users/1.jpg" alt="user" /></div>
-                                                <div class="chat-content">
-                                                    <h5>James Anderson</h5>
-                                                    <div class="box bg-light-info">Lorem Ipsum is simply dummy text of the printing & type setting industry.</div>
-                                                </div>
-                                                <div class="chat-time">10:56 am</div> -->
-                                            <!-- </li> -->
-                                            <!--chat Row -->
-                                            <!-- <li>
-                                                <div class="chat-img"><img src="assets/images/users/2.jpg" alt="user" /></div>
-                                                <div class="chat-content">
-                                                    <h5>Bianca Doe</h5>
-                                                    <div class="box bg-light-info">It’s Great opportunity to work.</div>
-                                                </div>
-                                                <div class="chat-time">10:57 am</div>
-                                            </li> -->
+                                            <!-- Transmitters and receivers -->
                                         </ul>
+                                    </div>
+                                    <div id="typingBox">
+                                        <!-- <span id="typingText">Sergui is typing...</span> -->
                                     </div>
                                     <div class="card-body b-t">
                                         <form id="formEnviar">
@@ -139,6 +127,8 @@
 
 
     <script src="js/libs/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="./js/socket-chat-jquery.js"></script>
     <script src="js/socket-chat.js"></script>

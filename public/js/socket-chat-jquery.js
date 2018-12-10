@@ -1,11 +1,31 @@
 var params = new URLSearchParams(window.location.search);
 
+let roomName = $('#roomName');
 let sidebar = $('#divUsuarios');
 let formEnviar = $('#formEnviar');
 let textMessage = $('#TextMessage');
 let chatBox = $('#divChatbox');
+let typingBox = $('#typingBox');
+
+textMessage.keyup(function(){
+    socket.emit('Istyping', {
+        username: params.get('nombre'),
+        room: params.get('sala')
+    })
+})
+
+// Dropdown for small devices
+$('.dropdown-toggle').dropdown();
 
 // Funciones para renderizar usuarios
+function renderRoom(room){
+    let html = '';
+
+    html += '<h3 class="box-title">Sala de chat <small>'+ room +'</small></h3>';
+    roomName.html(html);
+}
+
+
 function renderUsers(users){
     console.log(users)
 
@@ -46,7 +66,7 @@ function renderMessage(data, miMensaje){
         html += '</li>';
     } else {
         html += '<li class="animated fadeIn">';
-        
+
         if(data.nombre === 'Admin' || data.nombre === 'Administrador'){
             html +=    '<div class="chat-content">';
             html +=        '<div class="box bg-light-inverse">'+ data.mensaje +'</div>';
@@ -65,6 +85,14 @@ function renderMessage(data, miMensaje){
     }
 
     chatBox.append(html);
+}
+
+function renderTypingBox(data){
+    let html = '';
+
+    html = '<span id="typingText">'+ data.username +' está escribiendo...</span>';
+
+    typingBox.html(html)
 }
 
 

@@ -1,7 +1,7 @@
 // socket server
 const { io } = require('../server');
 const { Users } = require('../classes/usuarios');
-const createMessage = require('../utils/utilities'); // Funcion para crear mensaje
+const createMessage = require('../utils/utilities');
 
 const users = new Users();
 
@@ -17,7 +17,7 @@ io.on('connection', (client) => {
         client.join(user.sala);
 
         let activeUsers = users.addUser(client.id, user.nombre, user.sala);
-        let roomUsers = users.getUsersByGroup(user.sala)
+        let roomUsers = users.getUsersByGroup(user.sala) // Array de users en la sala
 
         client.broadcast.to(user.sala).emit('loginEvent', users.getUsersByGroup(user.sala) )
         client.broadcast.to(user.sala).emit('sendMessage', createMessage('Admin', `${user.nombre} se ha unido`));
@@ -47,5 +47,12 @@ io.on('connection', (client) => {
         let user = users.getUser(client.id)
 
         client.broadcast.to(data.receiver).emit('P2Pmessage', createMessage(user.username, data.message))
+    })
+
+    client.on('Istyping', function(data){
+        console.log('Server gets ', data)
+        client.broadcast.to(data.room).emit('Istyping', data)
+
+        client.broadcast.to(data.room).emit('notTyping')
     })
 });
