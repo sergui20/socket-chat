@@ -1,16 +1,14 @@
-// socket.io funciona con el protocolo http al igual que express
-
-const express = require('express'); // web infrastructure
-const socketIO = require('socket.io'); // Socket library
-const http = require('http');   // HTTP interface
+const express = require('express');
+const socketIO = require('socket.io');
+const http = require('http');
 
 const path = require('path');
 
-const app = express(); // Initializing express function
-let server = http.createServer(app); // Creating the server
+const app = express();
+let server = http.createServer(app);
 
 const publicPath = path.resolve(__dirname, '../public');
-const port = process.env.PORT || 3000; //Configuring the port
+const port = process.env.PORT || 3000;
 
 app.use(express.static(publicPath));
 
